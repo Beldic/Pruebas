@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prueba</title>
+</head>
+<body>
+
+    <canvas style=" background-color: rgb(0,0,0)" id="miCanvas" width="300" height ="200"></canvas>
+  
+
+<script>
+
+    const canvas = document.getElementById('miCanvas');
+    const ctx = canvas.getContext('2d');
+
+      
+
+
+
+// Declaramos el objeto player:
+
+    let objPlayer = {
+
+        nombre: "player1",
+
+        posX: 0,
+
+        posY: 0,
+
+        width: 50,
+
+        height: 100,
+
+        
+
+        drawForm(posX,posY,width,height) {
+
+            
+            
+            
+            ctx.fillStyle='rgb(255,0,0)';
+            ctx.fillRect(objPlayer.posX,objPlayer.posY,objPlayer.width,objPlayer.height);
+
+
+        
+        }
+
+
+
+
+
+
+    };
+    
+
+
+// Declaramos el objeto eventos del juego:
+
+    let objEvents = {
+
+         keyboardCheck(event) {
+
+            switch(event.key) {
+
+                case "ArrowUp":
+
+                    console.log("Flecha arriba presionada");
+                    objPlayer.posY -= 10;
+
+                    break;
+
+                case "ArrowDown":
+
+                    console.log("Flecha abajo presionada");
+                    objPlayer.posY +=10;
+                    
+                    break;
+
+                case "ArrowLeft":
+
+                    console.log("Flecha izquierda presionada");
+                    objPlayer.posX -=10;
+                    break;
+
+                case "ArrowRight":
+
+                    console.log("Flecha derecha presionada");
+                    objPlayer.posX +=10;
+                    break;
+
+                default:
+
+                    console.log("Sin movimiento");
+                    
+                    break;
+
+            }
+
+
+
+
+
+
+
+
+            }
+
+
+
+
+
+
+         
+       
+       
+       
+       
+       
+       
+        // addEventListener es un "escuchador" de eventos. 
+
+
+
+
+    };
+    
+
+   
+
+// Declaramos el objeto control del juego:
+
+    let objControl = {
+
+        FPS : 60, // Frames por segundo del juego
+
+        mainLoop() {  // Bucle principal 
+
+            setInterval(() => {
+
+                // "Borramos" el canvas para actualizar lo dibujado
+
+                ctx.fillStyle = "rgb(0,0,0)";                       
+                ctx.fillRect(0,0,canvas.width,canvas.height);
+
+                // Dibujamos el objeto player en el canvas
+                
+                objPlayer.drawForm(objPlayer.posX,objPlayer.posY,objPlayer.width,objPlayer.height);
+
+
+            },1000/objControl.FPS);
+            
+
+
+
+        }
+
+
+
+
+
+
+    };
+
+
+
+
+
+// Ejecutamos el bucle principal del juego:
+
+     
+
+    window.addEventListener('keydown',objEvents.keyboardCheck); 
+
+    
+
+    objControl.mainLoop();   //ejecutamos el objeto control
+
+
+
+
+
+
+
+
+    
+
+</script>    
+</body>
+</html>
