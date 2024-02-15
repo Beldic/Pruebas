@@ -15,7 +15,13 @@
     const canvas = document.getElementById('miCanvas');
     const ctx = canvas.getContext('2d');
 
-      
+ // Declaramos el objeto colision
+ 
+
+
+        
+
+        
 
 
 
@@ -25,15 +31,15 @@
 
         nombre: "player1",
 
-        posX: 0,
+        posX: 50,
 
-        posY: 0,
+        posY: 50,
 
         width: 50,
 
         height: 100,
 
-        
+        speed: 10,
 
         drawForm(posX,posY,width,height) {
 
@@ -61,33 +67,37 @@
     let objEvents = {
 
          keyboardCheck(event) {
-
+            let moveAmount = objPlayer.speed;
             switch(event.key) {
 
                 case "ArrowUp":
 
                     console.log("Flecha arriba presionada");
-                    objPlayer.posY -= 10;
-
+                        if (objPlayer.posY - moveAmount >= 0) //Verificar el límite superior
+                            objPlayer.posY -= moveAmount;
+                    
                     break;
 
                 case "ArrowDown":
 
                     console.log("Flecha abajo presionada");
-                    objPlayer.posY +=10;
+                        if (objPlayer.posY + moveAmount + objPlayer.height <= canvas.height) //Verificar el límite inferior
+                            objPlayer.posY += moveAmount;
                     
                     break;
 
                 case "ArrowLeft":
-
+                        
                     console.log("Flecha izquierda presionada");
-                    objPlayer.posX -=10;
+                        if (objPlayer.posX - moveAmount >= 0) //Verificar el límite izquierdo
+                            objPlayer.posX -= moveAmount;
                     break;
 
                 case "ArrowRight":
 
                     console.log("Flecha derecha presionada");
-                    objPlayer.posX +=10;
+                        if (objPlayer.posX + moveAmount + objPlayer.width <= canvas.width) //Verificar el límite derecho
+                            objPlayer.posX += moveAmount;
                     break;
 
                 default:
@@ -144,6 +154,7 @@
                 ctx.fillStyle = "rgb(0,0,0)";                       
                 ctx.fillRect(0,0,canvas.width,canvas.height);
 
+                
                 // Dibujamos el objeto player en el canvas
                 
                 objPlayer.drawForm(objPlayer.posX,objPlayer.posY,objPlayer.width,objPlayer.height);
@@ -169,13 +180,13 @@
 
 // Ejecutamos el bucle principal del juego:
 
-     
+    objControl.mainLoop();   //ejecutamos el objeto control
 
     window.addEventListener('keydown',objEvents.keyboardCheck); 
 
     
 
-    objControl.mainLoop();   //ejecutamos el objeto control
+    
 
 
 
