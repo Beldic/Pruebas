@@ -15,7 +15,6 @@
     const canvas = document.getElementById('miCanvas');
     const ctx = canvas.getContext('2d');
 
- // Declaramos el objeto colision
  
 
 
@@ -53,6 +52,74 @@
         
         }
 
+
+
+
+
+
+    };
+
+    // Declaramos el objeto ball:
+
+    let objBall = {
+
+        nombre: "ball1",
+
+        posX: 100,
+
+        posY: 100,
+
+        color: "rgb(255,0,0)",
+
+        border: "rgb(255,255,255)",
+
+        speed: 10,
+
+        drawForm(posX,posY,color,border) {
+
+            // Establecer el color del trazo
+
+            ctx.strokeStyle = objBall.border; // color del contorno
+            ctx.fillStyle = objBall.color; // color de relleno
+
+            // Dibujar un círculo 
+
+            // ctx.arc(x, y, radio, anguloInicial, anguloFinal, [antihorario]);
+            
+            ctx.beginPath(); // comienza un nuevo camino
+            ctx.arc(objBall.posX,objBall.posY,10,0,Math.PI*2); // Dibuja un círculo completo
+            ctx.fill(); // rellena el círculo
+            ctx.stroke(); // Dibuja el contrno del círculo 
+        
+        
+        
+        
+        
+        },
+        
+        
+        ballMove() {
+
+            console.log("bola en movimiento!");
+
+            
+
+                
+
+            if (objBall.posY - objBall.speed <= 0) {
+
+                direction = direction * -1;
+
+            }else if (objBall.posY + objBall.speed >= canvas.height) {
+
+                direction = direction * -1;
+
+
+            }
+
+            objBall.posY += objBall.speed * direction;
+
+        }
 
 
 
@@ -151,14 +218,26 @@
 
                 // "Borramos" el canvas para actualizar lo dibujado
 
+                count++;
+
                 ctx.fillStyle = "rgb(0,0,0)";                       
                 ctx.fillRect(0,0,canvas.width,canvas.height);
 
                 
                 // Dibujamos el objeto player en el canvas
                 
-                objPlayer.drawForm(objPlayer.posX,objPlayer.posY,objPlayer.width,objPlayer.height);
+                objPlayer.drawForm();
+                objBall.drawForm();
+                
+                
 
+                if (count === 60) {
+                        
+                        objBall.drawForm();
+                        objBall.ballMove();
+                        count = 0;
+                
+                }
 
             },1000/objControl.FPS);
             
@@ -179,6 +258,9 @@
 
 
 // Ejecutamos el bucle principal del juego:
+
+    let direction = 1;
+    let count = 0;
 
     objControl.mainLoop();   //ejecutamos el objeto control
 
